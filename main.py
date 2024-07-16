@@ -16,11 +16,31 @@ def create():
             ID SERIAL,
             NAME TEXT,
             AGE INT,
-            ADRESS TEXT
+            ADDRESS TEXT
         )'''
     )
 
     conne.commit()
     conne.close()
 
-    create()
+def insert_data():
+    conne = psycopg2.connect(
+        dbname="student",
+        user='postgres',
+        password='admin',
+        host='localhost',
+        port='5432'
+
+    )
+
+    cur = conne.cursor()
+    cur.execute(
+        '''
+    INSERT INTO teacher(name, age, address)
+    VALUES ('McGonagalova', 50, 'Bradavice')
+    '''
+    )
+
+    conne.commit()
+    conne.close()
+
