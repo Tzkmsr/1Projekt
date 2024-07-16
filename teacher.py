@@ -1,5 +1,6 @@
 from tkinter import *
 import psycopg2
+from module import *
 
 root = Tk()
 root.title("ŠKOLA A DATABÁZE")

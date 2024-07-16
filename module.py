@@ -23,7 +23,7 @@ def create():
     conne.commit()
     conne.close()
 
-def insert_data():
+def insert_data(name, age, address):
     conne = psycopg2.connect(
         dbname="student",
         user='postgres',
@@ -47,5 +47,3 @@ def insert_data():
     cur.execute(query, (teacher_name, teacher_age, teacher_address))
     conne.commit()
     conne.close()
-
-insert_data()
