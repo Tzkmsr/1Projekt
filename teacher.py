@@ -4,7 +4,7 @@ from module import *
 
 root = Tk()
 root.title("ŠKOLA A DATABÁZE")
-root.geometry("260x240")
+root.geometry("300x350")
 root.resizable(False, False)
 
 ## Labels, Entreies
@@ -35,6 +35,20 @@ entry_address.grid(row=3, column=1)
 # button
 button = Button(root, text="ADD", command=lambda:insert_data(entry_name.get(), entry_age.get(), entry_address.get()))
 button.grid(row=4,column=1)
+
+## SEARCH SECTION
+# general label
+label_search = Label(root, text='SEARCH DATA')
+label_search.grid(row=5, column=1)
+
+label_id = Label(root, text='SEARCH BY ID')
+label_id.grid(row=6, column=0)
+
+entry_id = Entry(root)
+entry_id.grid(row=6, column=1)
+
+button_search = Button(root, text='SEARCH')
+button_search.grid(row=7, column=1)
 
 
 root.mainloop()
