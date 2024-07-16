@@ -33,17 +33,12 @@ def insert_data(name, age, address):
 
     )
 
-    teacher_name = input("Zadej jmeno ucitele: ")
-    teacher_age = input("Zadej vek ucitele: ")
-    teacher_address = input("Zadej adresu ucitele: ")
-
-
     cur = conne.cursor()
     query = '''
     INSERT INTO teacher(name, age, address)
     VALUES (%s, %s, %s)
     '''
     
-    cur.execute(query, (teacher_name, teacher_age, teacher_address))
+    cur.execute(query, (name, age, address))
     conne.commit()
     conne.close()

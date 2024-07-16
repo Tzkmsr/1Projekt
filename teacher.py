@@ -33,7 +33,7 @@ entry_address = Entry(root)
 entry_address.grid(row=3, column=1)
 
 # button
-button = Button(root, text="ADD")
+button = Button(root, text="ADD", command=lambda:insert_data(entry_name.get(), entry_age.get(), entry_address.get()))
 button.grid(row=4,column=1)
 
 
