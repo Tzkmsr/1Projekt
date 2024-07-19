@@ -1,6 +1,80 @@
 from tkinter import *
 import psycopg2
-from module import *
+
+
+def create():
+    conne = psycopg2.connect(
+        dbname="student",
+        user='postgres',
+        password='admin',
+        host='localhost',
+        port='5432'
+
+    )
+
+    cur = conne.cursor()
+    cur.execute(
+        '''CREATE TABLE teacher(
+            ID SERIAL,
+            NAME TEXT,
+            AGE INT,
+            ADDRESS TEXT
+        )'''
+    )
+
+    conne.commit()
+    conne.close()
+
+
+def insert_data(name, age, address):
+    conne = psycopg2.connect(
+        dbname="student",
+        user='postgres',
+        password='admin',
+        host='localhost',
+        port='5432'
+
+    )
+
+    cur = conne.cursor()
+    query = '''
+    INSERT INTO teacher(name, age, address)
+    VALUES (%s, %s, %s)
+    '''
+    
+    cur.execute(query, (name, age, address))
+    conne.commit()
+    conne.close()
+
+
+def search(id):
+    conne = psycopg2.connect(
+        dbname="student",
+        user='postgres',
+        password='admin',
+        host='localhost',
+        port='5432'
+    )
+    querry = '''
+        SELECT * FROM teacher WHERE id = %s
+        '''
+
+    cur = conne.cursor()
+    cur.execute(querry, (id,))
+    row = cur.fetchone()
+    print(row)
+    display_search(row)
+    conne.commit()
+    conne.close()
+
+
+def display_search(data):
+    listbox = Listbox(root, width=25, height=2)
+    listbox.grid(row=8, column=1)
+    listbox.insert(0, data)
+
+
+
 
 root = Tk()
 root.title("ŠKOLA A DATABÁZE")
@@ -49,6 +123,5 @@ entry_id.grid(row=6, column=1)
 
 button_search = Button(root, text='SEARCH', command=lambda:search(entry_id.get()))
 button_search.grid(row=7, column=1)
-
 
 root.mainloop()
