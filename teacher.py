@@ -53,23 +53,29 @@ def insert_data(name, age, address):
 
 
 def search(id):
-    conne = psycopg2.connect(
-        dbname="student",
-        user='postgres',
-        password='admin',
-        host='localhost',
-        port='5432'
-    )
-    querry = '''
-        SELECT * FROM teacher WHERE id = %s
-        '''
+    try:
+        conne = psycopg2.connect(
+            dbname="student",
+            user='postgres',
+            password='admin',
+            host='localhost',
+            port='5432'
+        )
+        querry = '''
+            SELECT * FROM teacher WHERE id = %s
+            '''
 
-    cur = conne.cursor()
-    cur.execute(querry, (id,))
-    row = cur.fetchone()
-    display_search(row)
-    conne.commit()
-    conne.close()
+        cur = conne.cursor()
+        cur.execute(querry, (id,))
+        row = cur.fetchone()
+        if row == None:
+            display_search("unknown ID")
+        else:
+            display_search(row)
+            conne.commit()
+            conne.close()
+    except:
+        display_search("unknown ID")
 
 
 def display_search(data):
@@ -79,8 +85,8 @@ def display_search(data):
 
 
 def display_search_all(data):
-    listbox = Listbox(root, width=25, height=10)
-    listbox.grid(row=8, column=1)
+    listbox = Listbox(root, width=25, height=5)
+    listbox.grid(row=9, column=1)
     for one_data in data:
         listbox.insert(0, one_data)
 
@@ -151,7 +157,7 @@ label_id.grid(row=6, column=0)
 entry_id = Entry(root)
 entry_id.grid(row=6, column=1)
 
-button_search = Button(root, text='SEARCH', command=lambda:search(entry_id.get()) if entry_id.get().strip() else display_search("unknown ID") )
+button_search = Button(root, text='SEARCH', command=lambda:search(entry_id.get().strip()))
 button_search.grid(row=6, column=2)
 
 display_all()
