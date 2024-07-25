@@ -151,7 +151,7 @@ label_id.grid(row=6, column=0)
 entry_id = Entry(root)
 entry_id.grid(row=6, column=1)
 
-button_search = Button(root, text='SEARCH', command=lambda:search(entry_id.get()))
+button_search = Button(root, text='SEARCH', command=lambda:search(entry_id.get()) if entry_id.get().strip() else display_search("unknown ID") )
 button_search.grid(row=6, column=2)
 
 display_all()
