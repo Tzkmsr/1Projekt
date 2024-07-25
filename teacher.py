@@ -53,6 +53,8 @@ def insert_data(name, age, address):
 
 
 def search(id):
+    cur = None
+    conne = None
     try:
         conne = psycopg2.connect(
             dbname="student",
@@ -67,15 +69,20 @@ def search(id):
 
         cur = conne.cursor()
         cur.execute(querry, (id,))
-        row = cur.fetchone()
+        row = cur.fetchall()
         if row == None:
             display_search("unknown ID")
         else:
             display_search(row)
-            conne.commit()
+    except psycopg2.Error as e:
+        display_search(f"Database error: {e}")
+    except Exception as e:
+        display_search(f"Error: {e}")
+    finally:
+        if cur is not None:
+            cur.close()
+        if conne is not None:
             conne.close()
-    except:
-        display_search("unknown ID")
 
 
 def display_search(data):
