@@ -46,6 +46,8 @@ def insert_data(name, age, address):
     conne.commit()
     conne.close()
 
+    display_all()
+
 
 def search(id):
     conne = psycopg2.connect(
@@ -100,8 +102,6 @@ def  display_all():
 
 
 
-
-
 root = Tk()
 root.title("ŠKOLA A DATABÁZE")
 root.geometry("380x370")
@@ -150,8 +150,6 @@ entry_id.grid(row=6, column=1)
 button_search = Button(root, text='SEARCH', command=lambda:search(entry_id.get()))
 button_search.grid(row=6, column=2)
 
-button_search_all = Button(root, text='SEARCH ALL', command=display_all)
-button_search_all.grid(row=7, column=1)
-
+display_all()
 
 root.mainloop()
