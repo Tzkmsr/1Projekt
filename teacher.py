@@ -27,6 +27,9 @@ def create():
 
 
 def insert_data(name, age, address):
+    entry_name.delete(0, END)
+    entry_age.delete(0, END)
+    entry_address.delete(0, END)
     conne = psycopg2.connect(
         dbname="student",
         user='postgres',
@@ -73,6 +76,7 @@ def display_search(data):
     listbox = Listbox(root, width=25, height=2)
     listbox.grid(row=8, column=1)
     listbox.insert(0, data)
+
 
 def display_search_all(data):
     listbox = Listbox(root, width=25, height=10)
