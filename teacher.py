@@ -69,11 +69,11 @@ def search(id):
 
         cur = conne.cursor()
         cur.execute(querry, (id,))
-        row = cur.fetchall()
-        if row == None:
-            display_search("unknown ID")
-        else:
+        row = cur.fetchone()
+        if row is not None:
             display_search(row)
+        else:
+            display_search("unknown ID")
     except psycopg2.Error as e:
         display_search(f"Database error: {e}")
     except Exception as e:
@@ -94,7 +94,11 @@ def display_search(data):
 def display_search_all(data):
     listbox = Listbox(root, width=25, height=5)
     listbox.grid(row=9, column=1)
-    for one_data in data:
+    scrollbar = Scrollbar(root)
+    scrollbar.grid(row=9, column=2, sticky='nsw')
+    listbox.config(yscrollcommand=scrollbar.set)
+    scrollbar.config(command=listbox.yview)
+    for one_data in reversed(data):
         listbox.insert(0, one_data)
 
 
