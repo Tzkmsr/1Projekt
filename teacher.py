@@ -62,7 +62,6 @@ def search(id):
     cur = conne.cursor()
     cur.execute(querry, (id,))
     row = cur.fetchone()
-    print(row)
     display_search(row)
     conne.commit()
     conne.close()
@@ -73,12 +72,39 @@ def display_search(data):
     listbox.grid(row=8, column=1)
     listbox.insert(0, data)
 
+def display_search_all(data):
+    listbox = Listbox(root, width=25, height=10)
+    listbox.grid(row=8, column=1)
+    for one_data in data:
+        listbox.insert(0, one_data)
+
+
+def  display_all():
+    conne = psycopg2.connect(
+        dbname="student",
+        user='postgres',
+        password='admin',
+        host='localhost',
+        port='5432'
+
+    )
+
+    querry = '''SELECT * FROM teacher'''
+
+    cur = conne.cursor()
+    cur.execute(querry
+    )
+    row = cur.fetchall()
+    display_search_all(row)
+
+
+
 
 
 
 root = Tk()
 root.title("ŠKOLA A DATABÁZE")
-root.geometry("300x350")
+root.geometry("380x370")
 root.resizable(False, False)
 
 ## Labels, Entreies
@@ -122,6 +148,10 @@ entry_id = Entry(root)
 entry_id.grid(row=6, column=1)
 
 button_search = Button(root, text='SEARCH', command=lambda:search(entry_id.get()))
-button_search.grid(row=7, column=1)
+button_search.grid(row=6, column=2)
+
+button_search_all = Button(root, text='SEARCH ALL', command=display_all)
+button_search_all.grid(row=7, column=1)
+
 
 root.mainloop()
